@@ -21,27 +21,30 @@ Now add this method also in Appdelegate.swift file.
 
 
 3: Now go to ViewController.swift file and write the code in button action that will fetch user email & Name.                 
-
-     func btnClicked(_sender: Any) -> Bool {
-        TWTRTwitter.sharedInstance().logIn { (session, error) in
-            if (session != nil) {
-                self.firstName = session?.userName ?? ""
-                self.lastName = session?.userName ?? ""
-                let client = TWTRAPIClient.withCurrentUser()
-                client.requestEmail { email, error in
-                    if (email != nil) {
-                        print("signed in as \(String(describing: session?.userName))");
-                        let firstName = session?.userName ?? ""   // received first name
-                        let lastName = session?.userName ?? ""  // received last name
-                        let recivedEmailID = email ?? ""   // received email  
-                    } else {
-                        print("error: \(String(describing: error?.localizedDescription))");
-                    }
-                }
-             } else {
-                print("error: \(String(describing: error?.localizedDescription))");
-            }
-        }        
+    
+    func signIn() {
+        loginButton = TWTRLogInButton { (session, error) in
+            if let unwrappedSession = session {
+                let client = TWTRAPIClient()
+                client.loadUser(withID: unwrappedSession.userID, completion: { (user, error) in
+                    self.nameLabel.text = user?.name
+                    self.userNameLabel.text = unwrappedSession.userName
+                    if let imageUrl = user?.profileImageURL {
+                        let url = URL(string: imageUrl)
+                        let data = try? Data.init(contentsOf: url!)
+                        self.profileImageView.image = UIImage(data: data!)
+                    }
+                    else {
+                        print("Profile Image not present")
+                    }
+                })
+            }
+            else {
+                print("Login Error")
+            }
+        }
+        loginButton.center = self.view.center
+        self.view.addSubview(loginButton)
     }
   
 4: Now you have done all the required things for fetching the user credential in App
