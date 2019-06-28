@@ -6,7 +6,7 @@ https://github.com/twitter/twitter-kit-ios/wiki/Installation
 
 2: After that Go to Appdelgate.swift file and add this:
 
-func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
       
       TWTRTwitter.sharedInstance().start(withConsumerKey: "cZ0KGVebkYfHyeNvhoYmSI8Dx",consumerSecret: "VJCGJxEHpM5H7qQNAiq9YEyugIjLcAso8GDUtyqRvhYRP90t6r")
      
@@ -15,15 +15,14 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
 
 Now add this method also in Appdelegate.swift file.
 
- func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
         return TWTRTwitter.sharedInstance().application(app, open: url,options: options)
-   
- }
+    }
 
 3: Now to go ViewController.swift file and write the code in button action that will fetch user email & Name.
 for this:
   
-  func btnClicked(_sender: Any) -> Bool {
+     func btnClicked(_sender: Any) -> Bool {
         TWTRTwitter.sharedInstance().logIn { (session, error) in
             if (session != nil) {
                 self.firstName = session?.userName ?? ""
@@ -35,15 +34,15 @@ for this:
                         let firstName = session?.userName ?? ""   // received first name
                         let lastName = session?.userName ?? ""  // received last name
                         let recivedEmailID = email ?? ""   // received email  
-                    }else {
+                    } else {
                         print("error: \(String(describing: error?.localizedDescription))");
                     }
                 }
-            }else {
+             } else {
                 print("error: \(String(describing: error?.localizedDescription))");
             }
         }        
-  }
+    }
   
 4: Now you have done all the required things for fetching the user credential in App
 
@@ -57,8 +56,7 @@ Followed following steps then solved that issue
 
 2.1: To get the call back URL
 a: open info.plist file and copy URL schemes.
-it look like this.
-￼
+
 copy this ” twitterkit-js5zHyDKTz2RTthfgV5xl9icA”
 Note: ” twitterkit- Your Consumer Key”
 and Now open your twitter developer account & select your app.
