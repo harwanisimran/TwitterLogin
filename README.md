@@ -19,9 +19,9 @@ Now add this method also in Appdelegate.swift file.
         return TWTRTwitter.sharedInstance().application(app, open: url,options: options)
     }
 
-3: Now to go ViewController.swift file and write the code in button action that will fetch user email & Name.
-for this:
-  
+
+3: Now go to ViewController.swift file and write the code in button action that will fetch user email & Name.                 
+
      func btnClicked(_sender: Any) -> Bool {
         TWTRTwitter.sharedInstance().logIn { (session, error) in
             if (session != nil) {
